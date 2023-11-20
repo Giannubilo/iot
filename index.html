@@ -3,37 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DynamoDB Web Page</title>
+    <title>DynamoDB Items</title>
 </head>
 <body>
-    <h1>Data from DynamoDB</h1>
-    <div id="data-container"></div>
+    <h1>DynamoDB Items</h1>
+    <div id="items-container"></div>
 
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-    <script src="app.js"></script>
+    <script>
+        // Make a request to your API
+        fetch('https://tb4zjp1wfi.execute-api.us-east-1.amazonaws.com/prod')
+            .then(response => response.json())
+            .then(data => {
+                // Display the items on the HTML page
+                const itemsContainer = document.getElementById('items-container');
+                itemsContainer.innerHTML = '<pre>' + JSON.stringify(data, null, 2) + '</pre>';
+            })
+            .catch(error => console.error('Error:', error));
+    </script>
 </body>
-<script> 
-$(document).ready(function() {
-    // Replace 'API_GATEWAY_URL' with the actual URL of your API Gateway endpoint
-    var apiUrl = 'https://qhk23ddsi8.execute-api.us-east-1.amazonaws.com/deploy_API';
-
-    $.ajax({
-        url: apiUrl,
-        method: 'GET',
-        success: function(data) {
-            // Handle the data retrieved from DynamoDB
-            displayData(data);
-        },
-        error: function(error) {
-            console.error('Error:', error);
-        }
-    });
-
-    function displayData(data) {
-        // Update the HTML to display the DynamoDB data
-        $('#data-container').html('<pre>' + JSON.stringify(data, null, 2) + '</pre>');
-    }
-});
-</script>
-
 </html>
