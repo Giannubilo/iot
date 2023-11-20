@@ -10,15 +10,17 @@
     <div id="items-container"></div>
 
     <script>
-        // Make a request to your API
-        fetch('https://tb4zjp1wfi.execute-api.us-east-1.amazonaws.com/prod')
-            .then(response => response.json())
-            .then(data => {
-                // Display the items on the HTML page
-                const itemsContainer = document.getElementById('items-container');
-                itemsContainer.innerHTML = '<pre>' + JSON.stringify(data, null, 2) + '</pre>';
+        // Make a request to your API with 'no-cors' mode
+        fetch('https://tb4zjp1wfi.execute-api.us-east-1.amazonaws.com/prod', { mode: 'no-cors' })
+            .then(response => {
+                // Since we're using 'no-cors' mode, the response won't be directly accessible
+                // You can perform any necessary handling here if needed
+                console.log('Request sent successfully');
             })
             .catch(error => console.error('Error:', error));
+
+        // Note: In 'no-cors' mode, you won't be able to access the response body or headers directly.
+        // If you need to handle the response, you might need to adjust your server-side CORS configuration.
     </script>
 </body>
 </html>
