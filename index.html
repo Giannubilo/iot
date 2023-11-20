@@ -10,17 +10,33 @@
     <div id="items-container"></div>
 
     <script>
-        // Make a request to your API with 'no-cors' mode
-        fetch('https://tb4zjp1wfi.execute-api.us-east-1.amazonaws.com/prod', { mode: 'no-cors' })
+        // Make a request to your API without 'no-cors' mode
+        fetch('https://tb4zjp1wfi.execute-api.us-east-1.amazonaws.com/prod')
             .then(response => {
-                // Since we're using 'no-cors' mode, the response won't be directly accessible
-                // You can perform any necessary handling here if needed
-                console.log('Request sent successfully');
-            })
-            .catch(error => console.error('Error:', error));
+                // Check if the response status is OK (200)
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
 
-        // Note: In 'no-cors' mode, you won't be able to access the response body or headers directly.
-        // If you need to handle the response, you might need to adjust your server-side CORS configuration.
+                // Parse the JSON response if applicable
+                return response.json();
+            })
+            .then(data => {
+                // Handle the data as needed
+                console.log('Data received:', data);
+
+                // Example: Display data in the items-container div
+                const itemsContainer = document.getElementById('items-container');
+                itemsContainer.innerHTML = JSON.stringify(data, null, 2);
+            })
+            .catch(error => {
+                // Handle errors
+                console.error('Error:', error);
+
+                // Example: Display error in the items-container div
+                const itemsContainer = document.getElementById('items-container');
+                itemsContainer.innerHTML = 'Error fetching data. Please try again.';
+            });
     </script>
 </body>
 </html>
