@@ -1,7 +1,39 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DynamoDB Web Page</title>
+</head>
 <body>
-<h1>Hello World</h1>
-<p>I'm hosted with GitHub Pages.</p>
+    <h1>Data from DynamoDB</h1>
+    <div id="data-container"></div>
+
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="app.js"></script>
 </body>
+<script> 
+$(document).ready(function() {
+    // Replace 'API_GATEWAY_URL' with the actual URL of your API Gateway endpoint
+    var apiUrl = 'https://qhk23ddsi8.execute-api.us-east-1.amazonaws.com/deploy_API';
+
+    $.ajax({
+        url: apiUrl,
+        method: 'GET',
+        success: function(data) {
+            // Handle the data retrieved from DynamoDB
+            displayData(data);
+        },
+        error: function(error) {
+            console.error('Error:', error);
+        }
+    });
+
+    function displayData(data) {
+        // Update the HTML to display the DynamoDB data
+        $('#data-container').html('<pre>' + JSON.stringify(data, null, 2) + '</pre>');
+    }
+});
+</script>
+
 </html>
